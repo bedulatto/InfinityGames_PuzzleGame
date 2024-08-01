@@ -1,34 +1,103 @@
 ﻿using System;
+using System.Linq;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class NodeConnectionPoint : MonoBehaviour
 {
-    public Node CurrentConnection { get; private set; }
-    Node baseNode;
+    [SerializeField] Transform connectorTransform;
+    [SerializeField] Image connectorImage;
+    [SerializeField] float connectorRadius = 10;
+    public Node FromNode { get; private set; }
+    public NodeConnectionPoint ConnectedTo { get; private set; }
 
-    public event Action<NodeConnectionPoint, Node> OnConnectionEstablished;
-    public event Action<NodeConnectionPoint, Node> OnConnectionCeased;
+    public event Action<NodeConnectionPoint> OnConnectionStart;
+    public event Action<NodeConnectionPoint> OnConnectionEnd;
 
-    public void InitializeConnectionPoint(Node baseNode)
+    public void Initialize(Node fromNode)
     {
-        this.baseNode = baseNode;
+        FromNode = fromNode;
+        var connectionPoint = CastConnectionPoint();
+
+        if (connectionPoint != null)
+        {
+            StartConnection(connectionPoint);
+        }
+
+        connectorImage.color = ConnectedTo == null ? Color.red : Color.green;
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    public NodeConnectionPoint CastConnectionPoint()
     {
-        if (collision.TryGetComponent<Node>(out var node) && !baseNode.Equals(node))
+        var colliders = Physics2D.OverlapCircleAll(connectorTransform.position, connectorRadius);
+        return colliders
+            .Select(c => c.GetComponent<NodeConnectionPoint>())
+            .FirstOrDefault(c => c.GetInstanceID() != GetInstanceID());
+    }
+
+    public void DisconnectConnection()
+    {
+        if (ConnectedTo != null)
         {
-            CurrentConnection = node;
-            OnConnectionEstablished?.Invoke(this, CurrentConnection);
+            Disconnect(ConnectedTo);
         }
     }
 
-    private void OnTriggerExit2D(Collider2D collision)
+    public void CheckForConnection()
     {
-        if (collision.TryGetComponent<Node>(out var node) && node == CurrentConnection)
+        var connectionPoint = CastConnectionPoint();
+
+        if (connectionPoint != null && connectionPoint != ConnectedTo)
         {
-            CurrentConnection = null;
-            OnConnectionCeased?.Invoke(this, node);
+            Connect(connectionPoint);
         }
+    }
+
+    private void Connect(NodeConnectionPoint connectionPoint)
+    {
+        StartConnection(connectionPoint);
+        connectionPoint.StartConnection(this);
+    }
+
+    private void Disconnect(NodeConnectionPoint connectionPoint)
+    {
+        EndConnection(connectionPoint);
+        connectionPoint.EndConnection(this);
+    }
+
+    public void StartConnection(NodeConnectionPoint connectionPoint)
+    {
+        if (connectionPoint == null)
+        {
+            return;
+        }
+
+        ConnectedTo = connectionPoint;
+        connectorImage.color = Color.green;
+        OnConnectionStart?.Invoke(ConnectedTo);
+    }
+
+    public void EndConnection(NodeConnectionPoint connectionPoint)
+    {
+        connectorImage.color = Color.red;
+
+        if (connectionPoint == null || connectionPoint != ConnectedTo)
+        {
+            return;
+        }
+
+        ConnectedTo = null;
+        OnConnectionEnd?.Invoke(connectionPoint);
+    }
+
+    private void OnDrawGizmos()
+    {
+        if (connectorTransform == null)
+        {
+            return;
+        }
+
+        Gizmos.color = Color.cyan;
+        Gizmos.DrawSphere(connectorTransform.position, connectorRadius);
     }
 }
