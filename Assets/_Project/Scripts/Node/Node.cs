@@ -17,11 +17,16 @@ public class Node : MonoBehaviour
     [SerializeField] PathSegment pathSegment = PathSegment.Pathway;
 
     bool isBusy;
+    bool isDone;
 
     public int PathId => pathId;
     public PathSegment PathSegment => pathSegment;
 
-    public event Action OnNodeUpdate;
+    public event Action OnNodeInteraction;
+    public event Action OnNodeRotationStart;
+    public event Action OnNodeRotationEnd;
+    public event Action OnNodePathDone;
+    public event Action OnNodePathUndone;
 
     public void Initialize()
     {
@@ -31,30 +36,19 @@ public class Node : MonoBehaviour
 
     public void RotateNode()
     {
+        OnNodeInteraction?.Invoke();
+
         if (isBusy)
         {
             return;
         }
 
         isBusy = true;
+        OnNodeRotationStart?.Invoke();
 
-        if (isLocked)
-        {
-            rotationPivot.transform.localScale = Vector3.one * .9f;
-            LeanTween.scale(rotationPivot, Vector3.one, duration)
-           .setEase(easing)
-           .setOnComplete(() =>
-           {
-               isBusy = false;
-           });
-        }
-        else
+        if (!isLocked)
         {
             nodeConnection.DisconnectAllPoints();
-            rotationPivot.transform.localScale = Vector3.one * 1.2f;
-            LeanTween.scale(rotationPivot, Vector3.one, duration)
-                .setEase(easing);
-
             float angle = rotationPivot.transform.rotation.eulerAngles.z + rotationAngle;
             LeanTween.rotateZ(rotationPivot, angle, duration)
                 .setEase(easing)
@@ -62,7 +56,7 @@ public class Node : MonoBehaviour
                 {
                     nodeConnection.CheckAllPointsForConnection();
                     isBusy = false;
-                    OnNodeUpdate?.Invoke();
+                    OnNodeRotationEnd?.Invoke();
                 });
         }
     }
@@ -72,5 +66,17 @@ public class Node : MonoBehaviour
         return nodeConnection.ConnectedNodes
             .Select(n => n.FromNode)
             .ToList();
+    }
+
+    public void SetPathDone()
+    {
+        isDone = true;
+        OnNodePathDone?.Invoke();
+    }
+
+    public void SetPathUndone()
+    {
+        isDone = false;
+        OnNodePathUndone?.Invoke();
     }
 }

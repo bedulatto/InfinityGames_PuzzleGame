@@ -18,20 +18,22 @@ public class NodeManager : MonoBehaviour
 
         foreach (var node in allNodes)
         {
-            node.OnNodeUpdate += Node_OnNodeUpdate;
+            node.OnNodeRotationEnd += Node_OnNodeRotationEnd;
             node.Initialize();
         }
+
+        CheckPaths();
     }
 
     private void OnDestroy()
     {
         foreach (var node in allNodes)
         {
-            node.OnNodeUpdate -= Node_OnNodeUpdate;
+            node.OnNodeRotationEnd -= Node_OnNodeRotationEnd;
         }
     }
 
-    private void Node_OnNodeUpdate()
+    private void Node_OnNodeRotationEnd()
     {
         CheckPaths();
     }
@@ -40,11 +42,26 @@ public class NodeManager : MonoBehaviour
     {
         foreach (var pathStart in pathStartList)
         {
-            if (CanReachEnd(pathStart))
+            var nodesInPath = GetNodesInPath(pathStart.PathId);
+            bool isPathComplete = CanReachEnd(pathStart);
+
+            foreach (var node in nodesInPath)
             {
-                Debug.Log("end reached");
+                if (isPathComplete)
+                {
+                    node.SetPathDone();
+                }
+                else
+                {
+                    node.SetPathUndone();
+                }
             }
         }
+    }
+
+    public List<Node> GetNodesInPath(int pathId)
+    {
+        return allNodes.Where(n => n.PathId == pathId).ToList();
     }
 
     private bool CanReachEnd(Node start)
