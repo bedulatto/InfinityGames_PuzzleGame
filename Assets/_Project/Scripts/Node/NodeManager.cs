@@ -8,9 +8,13 @@ public class NodeManager : MonoBehaviour
 {
     private List<Node> allNodes;
     private List<Node> pathStartList;
+    private List<int> completedPaths;
+
+    public static event Action<int> OnPathCompleted;
 
     private IEnumerator Start()
     {
+        completedPaths = new List<int>();
         allNodes = GetComponentsInChildren<Node>().ToList();
         pathStartList = allNodes.Where(n => n.PathSegment == PathSegment.Start).ToList();
 
@@ -49,6 +53,12 @@ public class NodeManager : MonoBehaviour
             {
                 if (isPathComplete)
                 {
+                    if (!completedPaths.Contains(node.PathId))
+                    {
+                        OnPathCompleted?.Invoke(node.PathId);
+                        completedPaths.Add(node.PathId);
+                    }
+
                     node.SetPathDone();
                 }
                 else
