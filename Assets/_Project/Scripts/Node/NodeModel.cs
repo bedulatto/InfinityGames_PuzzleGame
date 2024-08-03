@@ -5,21 +5,28 @@ using UnityEngine.UI;
 public class NodeModel : MonoBehaviour
 {
     [Header("Components")]
-    [SerializeField] GameObject background;
+    [SerializeField] Image background;
     [SerializeField] Image pathImage;
 
     [Header("Interaction")]
-    [SerializeField] float interactionAnimationDuration = .4f;
-    [SerializeField] LeanTweenType easing = LeanTweenType.easeOutElastic;
+    [SerializeField] float interactionColorAnimationDuration = .1f;
+    [SerializeField] Color bgInteractionColor = Color.grey;
+    [SerializeField] float interactionScaleAnimationDuration = 1f;
+    [SerializeField] LeanTweenType scaleEasing = LeanTweenType.easeOutElastic;
 
     [Header("Path")]
+    [SerializeField] float doneAnimationDuration = .4f;
     [SerializeField] Color pathDoneColor = Color.cyan;
     [SerializeField] Color pathUndoneColor = Color.white;
+    [SerializeField] Color bgDoneColor = Color.grey;
 
     Node node;
+    Color storedBgColor;
 
     void Start()
     {
+        pathImage.color = pathUndoneColor;
+        storedBgColor = background.color;
         node = GetComponent<Node>();
         node.OnNodeInteraction += Node_OnNodeInteraction;
         node.OnNodePathDone += Node_OnNodePathDone;
@@ -35,13 +42,30 @@ public class NodeModel : MonoBehaviour
 
     private void Node_OnNodeInteraction()
     {
-        LeanTween.cancel(background);
-        background.transform.localScale = Vector3.one * .9f;
-        LeanTween.scale(background, Vector3.one, interactionAnimationDuration).setEase(easing);
+        LeanTween.cancel(background.gameObject);
+        background.color = bgInteractionColor;
+        LeanTween.value(0, 1, interactionColorAnimationDuration)
+            .setOnUpdate((float value) =>
+            {
+                background.color = Color.Lerp(bgInteractionColor, storedBgColor, value);
+            });
+
+        LeanTween.cancel(gameObject);
+        transform.localScale = Vector3.one * 1.2f;
+        LeanTween.scale(gameObject, Vector3.one, interactionScaleAnimationDuration).setEase(scaleEasing);
     }
 
     private void Node_OnNodePathDone()
     {
+        LeanTween.cancel(background.gameObject);
+        background.color = bgDoneColor;
+        LeanTween.value(0, 1, doneAnimationDuration)
+            .setOnUpdate((float value) =>
+            {
+                background.color = Color.Lerp(bgDoneColor, storedBgColor, value);
+            });
+
+
         pathImage.color = pathDoneColor;
     }
 

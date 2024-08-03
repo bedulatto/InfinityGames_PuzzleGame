@@ -11,6 +11,7 @@ public class NodeManager : MonoBehaviour
     private List<int> completedPaths;
 
     public static event Action<int> OnPathCompleted;
+    public static event Action OnAllPathCompleted;
 
     private IEnumerator Start()
     {
@@ -66,6 +67,16 @@ public class NodeManager : MonoBehaviour
                     node.SetPathUndone();
                 }
             }
+        }
+
+        if (pathStartList.Count == completedPaths.Count)
+        {
+            foreach (var node in allNodes)
+            {
+                node.Lock();
+            }
+
+            OnAllPathCompleted?.Invoke();
         }
     }
 

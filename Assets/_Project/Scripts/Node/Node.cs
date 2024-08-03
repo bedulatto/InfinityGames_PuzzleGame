@@ -79,4 +79,14 @@ public class Node : MonoBehaviour
         isDone = false;
         OnNodePathUndone?.Invoke();
     }
+
+    public void Lock()
+    {
+        isLocked = true;
+    }
+
+    public void Unlock()
+    {
+        isLocked = false;
+    }
 }

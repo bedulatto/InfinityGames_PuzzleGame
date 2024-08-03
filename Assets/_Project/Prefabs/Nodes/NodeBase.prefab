@@ -59,7 +59,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0, b: 0, a: 0.16862746}
+  m_Color: {r: 0.3254902, g: 0.39215687, b: 0.5764706, a: 0}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -198,8 +198,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rotationPivot: {fileID: 2357476654001905628}
   rotationAngle: 45
-  duration: 0.2
-  easing: 16
+  duration: 0.5
+  easing: 24
   isLocked: 0
   nodeConnection: {fileID: 7692685929708114965}
   pathId: 0
@@ -216,12 +216,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 12b962ac09d58f64aaf28756fe71ae51, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  background: {fileID: 5094622812753651873}
+  background: {fileID: 2901413546022480431}
   pathImage: {fileID: 0}
-  interactionAnimationDuration: 0.8
-  easing: 30
-  pathDoneColor: {r: 1, g: 1, b: 1, a: 1}
-  pathUndoneColor: {r: 0.6226415, g: 0.6226415, b: 0.6226415, a: 1}
+  interactionColorAnimationDuration: 0.2
+  bgInteractionColor: {r: 0.3254902, g: 0.39215687, b: 0.5764706, a: 0.36862746}
+  interactionScaleAnimationDuration: 1
+  scaleEasing: 18
+  doneAnimationDuration: 0.8
+  pathDoneColor: {r: 0.4509804, g: 0.73333335, b: 0.6392157, a: 1}
+  pathUndoneColor: {r: 0.83137256, g: 0.7411765, b: 0.6745098, a: 1}
+  bgDoneColor: {r: 0.9647059, g: 0.9843137, b: 0.47843137, a: 1}
 --- !u!1 &2357476654976150949
 GameObject:
   m_ObjectHideFlags: 0

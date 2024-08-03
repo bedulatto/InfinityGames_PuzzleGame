@@ -9,6 +9,7 @@ public class ProgressUI : MonoBehaviour
 
     [Header("Components")]
     [SerializeField] CanvasGroup canvasGroup;
+    [SerializeField] TextMeshProUGUI currentLevelText;
     [SerializeField] Image progressBarFill;
     [SerializeField] TextMeshProUGUI totalXpText;
     [SerializeField] TextMeshProUGUI currentXpText;
@@ -22,10 +23,15 @@ public class ProgressUI : MonoBehaviour
     private float lastExperienceRatioValue = 0;
     private int lastTotalExperienceValue = 0;
     private int lastCurrentExperienceValue = 0;
+    private int lastLevel = 0;
 
     private void Start()
     {
         canvasGroup.alpha = 0;
+        lastExperienceRatioValue = progress.ExperienceRatio;
+        lastTotalExperienceValue = progress.TotalExperience;
+        lastCurrentExperienceValue = progress.CurrentExperience;
+        lastLevel = progress.CurrentLevel;
         UpdateUI();
         progress.OnExperienceIncreased += Progress_OnExperienceIncreased;
     }
@@ -43,6 +49,7 @@ public class ProgressUI : MonoBehaviour
 
     private void UpdateUI()
     {
+        currentLevelText.text = lastLevel.ToString();
         float fillAmount = progress.ExperienceRatio - lastExperienceRatioValue;
 
         if (lastExperienceRatioValue > progress.ExperienceRatio)
@@ -58,6 +65,7 @@ public class ProgressUI : MonoBehaviour
 
                 if (newFill >= 1)
                 {
+                    currentLevelText.text = progress.CurrentLevel.ToString();
                     newFill = newFill - 1;
                 }
 
@@ -67,17 +75,18 @@ public class ProgressUI : MonoBehaviour
             {
                 progressBarFill.fillAmount = progress.ExperienceRatio;
                 lastExperienceRatioValue = progress.ExperienceRatio;
+                lastLevel = progress.CurrentLevel;
             });
 
         LeanTween.value(lastCurrentExperienceValue, progress.CurrentExperience, updateUiDuration)
           .setDelay(enterDuration)
           .setOnUpdate((float value) =>
           {
-              currentXpText.text = $"{Mathf.RoundToInt(value)}/{progress.LevelThreshold}";
+              currentXpText.text = $"{Mathf.RoundToInt(value)} / {ProgressConstants.LevelThreshold}";
           })
           .setOnComplete(() =>
           {
-              currentXpText.text = $"{progress.CurrentExperience}/{progress.LevelThreshold}";
+              currentXpText.text = $"{progress.CurrentExperience} / {ProgressConstants.LevelThreshold}";
               lastCurrentExperienceValue = progress.CurrentExperience;
           });
 
@@ -85,11 +94,11 @@ public class ProgressUI : MonoBehaviour
            .setDelay(enterDuration)
            .setOnUpdate((float value) =>
            {
-               totalXpText.text = $"{Mathf.RoundToInt(value)}";
+               totalXpText.text = $"Total XP {Mathf.RoundToInt(value)}";
            })
            .setOnComplete(() =>
            {
-               totalXpText.text = $"{progress.TotalExperience}";
+               totalXpText.text = $"Total XP {progress.TotalExperience}";
                lastTotalExperienceValue = progress.TotalExperience;
            });
     }

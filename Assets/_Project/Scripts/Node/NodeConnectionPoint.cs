@@ -8,6 +8,9 @@ public class NodeConnectionPoint : MonoBehaviour
     [SerializeField] Transform connectorTransform;
     [SerializeField] Image connectorImage;
     [SerializeField] float connectorRadius = 10;
+    [SerializeField] Color jointDefaultColor = Color.grey;
+    [SerializeField] Color jointConnectedColor = Color.cyan;
+
     public Node FromNode { get; private set; }
     public NodeConnectionPoint ConnectedTo { get; private set; }
 
@@ -24,7 +27,7 @@ public class NodeConnectionPoint : MonoBehaviour
             StartConnection(connectionPoint);
         }
 
-        connectorImage.color = ConnectedTo == null ? Color.red : Color.green;
+        connectorImage.color = ConnectedTo == null ? jointDefaultColor : jointConnectedColor;
     }
 
     public NodeConnectionPoint CastConnectionPoint()
@@ -73,13 +76,13 @@ public class NodeConnectionPoint : MonoBehaviour
         }
 
         ConnectedTo = connectionPoint;
-        connectorImage.color = Color.green;
+        connectorImage.color = jointConnectedColor;
         OnConnectionStart?.Invoke(ConnectedTo);
     }
 
     public void EndConnection(NodeConnectionPoint connectionPoint)
     {
-        connectorImage.color = Color.red;
+        connectorImage.color = jointDefaultColor;
 
         if (connectionPoint == null || connectionPoint != ConnectedTo)
         {
@@ -97,7 +100,7 @@ public class NodeConnectionPoint : MonoBehaviour
             return;
         }
 
-        Gizmos.color = Color.cyan;
+        Gizmos.color = Color.green;
         Gizmos.DrawSphere(connectorTransform.position, connectorRadius);
     }
 }

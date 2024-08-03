@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
-public class ScoreTrigger : MonoBehaviour
+public class StageManager : MonoBehaviour
 {
     [SerializeField] ProgressSO progress;
     [SerializeField] int scoreValue = 250;
@@ -10,12 +10,19 @@ public class ScoreTrigger : MonoBehaviour
 
     private void Start()
     {
+        NodeManager.OnAllPathCompleted += NodeManager_OnAllPathCompleted;
         NodeManager.OnPathCompleted += NodeManager_OnPathCompleted;
     }
 
     private void OnDestroy()
     {
+        NodeManager.OnAllPathCompleted -= NodeManager_OnAllPathCompleted;
         NodeManager.OnPathCompleted -= NodeManager_OnPathCompleted;
+    }
+
+    private void NodeManager_OnAllPathCompleted()
+    {
+        progress.SetLastStage(progress.LastStage + 1);
     }
 
     private void NodeManager_OnPathCompleted(int pathId)
