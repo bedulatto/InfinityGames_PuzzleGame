@@ -16,8 +16,8 @@ public class HubButton : MonoBehaviour
         this.sceneName = sceneName;
         nameText.text = displayName;
         lockedIcon.SetActive(isLocked);
-        completedIcon.SetActive(hasCompleted);
-        notCompletedIcon.SetActive(!hasCompleted);
+        completedIcon.SetActive(hasCompleted && !isLocked);
+        notCompletedIcon.SetActive(!hasCompleted && !isLocked);
         button.interactable = !isLocked;
 
         if (!isLocked)

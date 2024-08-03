@@ -258,7 +258,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2357476654532471744, guid: 7cf18b662bd09c44aab0934a6b0c63b0, type: 3}
       propertyPath: isLocked
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2357476654532471744, guid: 7cf18b662bd09c44aab0934a6b0c63b0, type: 3}
       propertyPath: pathSegment

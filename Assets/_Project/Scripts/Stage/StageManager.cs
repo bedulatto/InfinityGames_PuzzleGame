@@ -4,7 +4,8 @@ using UnityEngine;
 public class StageManager : MonoBehaviour
 {
     [SerializeField] ProgressSO progress;
-    [SerializeField] int scoreValue = 250;
+    [SerializeField] StageSO stage;
+    [SerializeField] float waitToLoadNextStage = 3;
 
     public event Action<int> OnScored;
 
@@ -22,7 +23,12 @@ public class StageManager : MonoBehaviour
 
     private void NodeManager_OnAllPathCompleted()
     {
-        progress.SetLastStage(progress.LastStage + 1);
+        var stageList = GameManager.Instance.StageList;
+        int stageIndex = stageList.IndexOf(stage);
+        progress.RegisterStageBeat(stageIndex);
+        int nextStageIndex = Mathf.Min(progress.LastStagePlayed + 1, stageList.Count - 1);
+        var nextStageName = stageList[nextStageIndex].SceneName;
+        GameManager.Instance.WaitAndLoadScene(nextStageName, waitToLoadNextStage);
     }
 
     private void NodeManager_OnPathCompleted(int pathId)
@@ -33,7 +39,7 @@ public class StageManager : MonoBehaviour
     [ContextMenu("Trigger")]
     public void TriggerScore()
     {
-        progress.AddExperience(scoreValue);
-        OnScored?.Invoke(scoreValue);
+        progress.AddExperience(stage.StageScoreValue);
+        OnScored?.Invoke(stage.StageScoreValue);
     }
 }

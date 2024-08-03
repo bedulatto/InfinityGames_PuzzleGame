@@ -9,11 +9,11 @@ public class HubManager : MonoBehaviour
 
     private void Start()
     {
-        for (int i = 0; i < GameManager.Instance.StageInfoList.Count; i++)
+        for (int i = 0; i < GameManager.Instance.StageList.Count; i++)
         {
-            var stageInfo = GameManager.Instance.StageInfoList[i];
-            bool isLocked = progress.LastStage < i;
-            bool hasCompleted = progress.LastStage > i;
+            var stageInfo = GameManager.Instance.StageList[i];
+            bool isLocked = progress.LastStageBeat + 1 < i;
+            bool hasCompleted = progress.LastStageBeat >= i;
             var btn = Instantiate(hubButtonPrefab, hubContentPanel);
             btn.SetHubButton(stageInfo.SceneName, stageInfo.DisplayName, isLocked, hasCompleted);
         }

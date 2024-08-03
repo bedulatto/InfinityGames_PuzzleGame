@@ -174,7 +174,7 @@ MonoBehaviour:
         m_Calls:
         - m_Target: {fileID: 2357476654532471744}
           m_TargetAssemblyTypeName: Node, Assembly-CSharp
-          m_MethodName: RotateNode
+          m_MethodName: InteractWithNode
           m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
@@ -201,6 +201,16 @@ MonoBehaviour:
   duration: 0.3
   easing: 24
   isLocked: 0
+  randomRotationAtStart: 1
+  possibleStartRotationList:
+  - 0
+  - 45
+  - 90
+  - 135
+  - 180
+  - 225
+  - 270
+  - 315
   nodeConnection: {fileID: 7692685929708114965}
   pathId: 0
   pathSegment: 0

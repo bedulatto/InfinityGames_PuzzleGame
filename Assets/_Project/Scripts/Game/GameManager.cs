@@ -16,14 +16,13 @@ public class GameManager : MonoBehaviour
     private static GameManager instance;
     public static GameManager Instance => instance;
 
-    [SerializeField] ProgressSO playerProgress;
     [SerializeField] ScreenTransition screenTransition;
+    [SerializeField] List<StageSO> stageList;
     [SerializeField] string hubScene = "HubScene";
-    [SerializeField] List<StageInfo> stageInfoList;
     [SerializeField] float inTransitionTime = 0.4f;
     [SerializeField] float outTransitionTime = 0.4f;
 
-    public List<StageInfo> StageInfoList => stageInfoList;
+    public List<StageSO> StageList => stageList;
 
     private void Awake()
     {
@@ -36,11 +35,6 @@ public class GameManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
-    }
-
-    private void Start()
-    {
-        playerProgress.OnLastStageChanged += PlayerProgress_OnLastStageChanged;
     }
 
     public void LoadScene()
@@ -68,14 +62,12 @@ public class GameManager : MonoBehaviour
         screenTransition.LeaveTransition(outTransitionTime);
     }
 
-    private void PlayerProgress_OnLastStageChanged()
+    public void WaitAndLoadScene(string sceneName, float waitDuration)
     {
-        int stageIndex = playerProgress.LastStage;
-        stageIndex = Mathf.Min(stageIndex, stageInfoList.Count - 1);
-        StartCoroutine(WaitAndLoadScene(stageInfoList[stageIndex].SceneName, 2));
+        StartCoroutine(WaitAndLoadSceneRoutine(sceneName, waitDuration));
     }
 
-    private IEnumerator WaitAndLoadScene(string sceneName, float waitForSeconds)
+    private IEnumerator WaitAndLoadSceneRoutine(string sceneName, float waitForSeconds)
     {
         yield return new WaitForSeconds(waitForSeconds);
         LoadScene(sceneName);

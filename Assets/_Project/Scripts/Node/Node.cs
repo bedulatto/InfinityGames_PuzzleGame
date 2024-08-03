@@ -10,6 +10,8 @@ public class Node : MonoBehaviour
     [SerializeField] float duration = 0.2f;
     [SerializeField] LeanTweenType easing = LeanTweenType.easeInOutSine;
     [SerializeField] bool isLocked;
+    [SerializeField] bool randomRotationAtStart;
+    [SerializeField] List<float> possibleStartRotationList;
 
     [Header("Path")]
     [SerializeField] NodeConnection nodeConnection;
@@ -30,14 +32,26 @@ public class Node : MonoBehaviour
 
     public void Initialize()
     {
+        if (randomRotationAtStart)
+        {
+            int randomAngleIndex = UnityEngine.Random.Range(0, possibleStartRotationList.Count);
+            float randomAngle = possibleStartRotationList[randomAngleIndex];
+            rotationPivot.transform.Rotate(Vector3.forward, randomAngle);
+        }
+
         nodeConnection.Initialize(this);
         isBusy = false;
     }
 
-    public void RotateNode()
+    public void InteractWithNode()
     {
         OnNodeInteraction?.Invoke();
+        float newAngle = rotationPivot.transform.rotation.eulerAngles.z + rotationAngle;
+        RotateNode(newAngle);
+    }
 
+    public void RotateNode(float newAngle)
+    {
         if (isBusy)
         {
             return;
@@ -49,8 +63,7 @@ public class Node : MonoBehaviour
         if (!isLocked)
         {
             nodeConnection.DisconnectAllPoints();
-            float angle = rotationPivot.transform.rotation.eulerAngles.z + rotationAngle;
-            LeanTween.rotateZ(rotationPivot, angle, duration)
+            LeanTween.rotateZ(rotationPivot, newAngle, duration)
                 .setEase(easing)
                 .setOnComplete(() =>
                 {

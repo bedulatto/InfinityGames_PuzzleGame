@@ -1,9 +1,11 @@
 using System;
 using UnityEngine;
+
 [CreateAssetMenu(fileName = "Progress", menuName = "Puzzle/Progress")]
 public class ProgressSO : ScriptableObject
 {
-    public int LastStage = 0;
+    public int LastStageBeat = 0;
+    public int LastStagePlayed = 0;
     public int CurrentExperience = 0;
     public int TotalExperience = 0;
     public int CurrentLevel = 0;
@@ -17,7 +19,8 @@ public class ProgressSO : ScriptableObject
     }
 
     public event Action OnExperienceIncreased;
-    public event Action OnLastStageChanged;
+    public event Action OnStageBeat;
+    public event Action OnStagePlayed;
 
     public void AddExperience(int xp)
     {
@@ -38,9 +41,15 @@ public class ProgressSO : ScriptableObject
         }
     }
 
-    public void SetLastStage(int stage)
+    public void RegisterStageBeat(int stage)
     {
-        LastStage = stage;
-        OnLastStageChanged?.Invoke();
+        LastStagePlayed = stage;
+        OnStagePlayed?.Invoke();
+
+        if (stage > LastStageBeat)
+        {
+            LastStageBeat = stage;
+            OnStageBeat?.Invoke();
+        }
     }
 }
