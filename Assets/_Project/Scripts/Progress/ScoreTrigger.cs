@@ -20,6 +20,12 @@ public class ScoreTrigger : MonoBehaviour
 
     private void NodeManager_OnPathCompleted(int pathId)
     {
+        TriggerScore();
+    }
+
+    [ContextMenu("Trigger")]
+    public void TriggerScore()
+    {
         progress.AddExperience(scoreValue);
         OnScored?.Invoke(scoreValue);
     }
