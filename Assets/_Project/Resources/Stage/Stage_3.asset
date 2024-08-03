@@ -14,4 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   DisplayName: Stage 3
   SceneName: Stage_3
-  StageScoreValue: 750
+  StageScoreValue: 500

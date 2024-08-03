@@ -9,12 +9,12 @@ public class HubButton : MonoBehaviour
     [SerializeField] GameObject completedIcon;
     [SerializeField] GameObject notCompletedIcon;
     [SerializeField] GameObject lockedIcon;
-    string sceneName;
+    StageSO stageInfo;
 
-    public void SetHubButton(string sceneName, string displayName, bool isLocked, bool hasCompleted)
+    public void SetHubButton(StageSO stageInfo, bool isLocked, bool hasCompleted)
     {
-        this.sceneName = sceneName;
-        nameText.text = displayName;
+        this.stageInfo = stageInfo;
+        nameText.text = stageInfo.DisplayName;
         lockedIcon.SetActive(isLocked);
         completedIcon.SetActive(hasCompleted && !isLocked);
         notCompletedIcon.SetActive(!hasCompleted && !isLocked);
@@ -28,6 +28,6 @@ public class HubButton : MonoBehaviour
 
     private void OnButtonClick()
     {
-        GameManager.Instance.LoadScene(sceneName);
+        GameManager.Instance.LoadStage(stageInfo);
     }
 }

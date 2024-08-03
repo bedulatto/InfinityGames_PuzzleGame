@@ -15,7 +15,7 @@ public class HubManager : MonoBehaviour
             bool isLocked = progress.LastStageBeat + 1 < i;
             bool hasCompleted = progress.LastStageBeat >= i;
             var btn = Instantiate(hubButtonPrefab, hubContentPanel);
-            btn.SetHubButton(stageInfo.SceneName, stageInfo.DisplayName, isLocked, hasCompleted);
+            btn.SetHubButton(stageInfo, isLocked, hasCompleted);
         }
     }
 }

@@ -15,6 +15,7 @@ public class ProgressUI : MonoBehaviour
     [SerializeField] TextMeshProUGUI currentXpText;
 
     [Header("Show And Hide Animation")]
+    [SerializeField] LeanTweenType easingType = LeanTweenType.easeInOutBounce;
     [SerializeField] float enterDuration = 0.2f;
     [SerializeField] float leaveDuration = 0.2f;
     [SerializeField] float showDuration = 1f;
@@ -109,7 +110,7 @@ public class ProgressUI : MonoBehaviour
         canvasGroup.transform.localScale = new Vector3(1, 0, 1);
         LeanTween.alphaCanvas(canvasGroup, 1, enterDuration);
         LeanTween.scaleY(canvasGroup.gameObject, 1, enterDuration)
-            .setEaseOutElastic();
+            .setEase(easingType);
         LeanTween.alphaCanvas(canvasGroup, 0, leaveDuration)
             .setDelay(showDuration);
         LeanTween.scaleY(canvasGroup.gameObject, 0, enterDuration)

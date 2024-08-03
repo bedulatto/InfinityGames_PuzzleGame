@@ -152,16 +152,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5df44393f3cd1a44e8ff4d4c5a7dba8d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  screenTransition: {fileID: 2059184990}
+  progress: {fileID: 11400000, guid: a04130833f2e7734ab655de126c03468, type: 2}
   stageList:
   - {fileID: 11400000, guid: 40a7795279f9a5749af9e3619aa17ba5, type: 2}
   - {fileID: 11400000, guid: 8587b3ee3c5ca0b498c8f870bf5b2cde, type: 2}
   - {fileID: 11400000, guid: 4850bf185671324488d81201e4380c0a, type: 2}
   - {fileID: 11400000, guid: bd070eff5547b5c4bb8b88117a815f96, type: 2}
   - {fileID: 11400000, guid: b9cbd3a8ec50b44498e7ea7f0e8ee495, type: 2}
+  screenTransition: {fileID: 2059184990}
   hubScene: HubScene
   inTransitionTime: 0.8
   outTransitionTime: 0.8
+  waitToLoadNextStage: 3
 --- !u!4 &115800677
 Transform:
   m_ObjectHideFlags: 0
