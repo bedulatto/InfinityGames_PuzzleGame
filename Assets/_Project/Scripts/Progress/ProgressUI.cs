@@ -13,6 +13,7 @@ public class ProgressUI : MonoBehaviour
     [SerializeField] Image progressBarFill;
     [SerializeField] TextMeshProUGUI totalXpText;
     [SerializeField] TextMeshProUGUI currentXpText;
+    [SerializeField] AudioSource showAudio;
 
     [Header("Show And Hide Animation")]
     [SerializeField] LeanTweenType easingType = LeanTweenType.easeInOutBounce;
@@ -106,6 +107,7 @@ public class ProgressUI : MonoBehaviour
 
     private void ShowAndHideAnimation()
     {
+        showAudio.Play();
         LeanTween.cancel(canvasGroup.gameObject);
         canvasGroup.transform.localScale = new Vector3(1, 0, 1);
         LeanTween.alphaCanvas(canvasGroup, 1, enterDuration);
