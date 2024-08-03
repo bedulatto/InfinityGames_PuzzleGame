@@ -160,6 +160,8 @@ MonoBehaviour:
     SceneName: Stage_1
   - DisplayName: STAGE 2
     SceneName: Stage_2
+  - DisplayName: STAGE 3
+    SceneName: Stage_3
   inTransitionTime: 0.8
   outTransitionTime: 0.8
 --- !u!4 &115800677

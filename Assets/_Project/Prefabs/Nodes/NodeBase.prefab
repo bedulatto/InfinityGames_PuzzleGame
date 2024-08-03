@@ -198,7 +198,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rotationPivot: {fileID: 2357476654001905628}
   rotationAngle: 45
-  duration: 0.5
+  duration: 0.3
   easing: 24
   isLocked: 0
   nodeConnection: {fileID: 7692685929708114965}
