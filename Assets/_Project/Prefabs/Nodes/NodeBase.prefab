@@ -199,7 +199,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rotationPivot: {fileID: 2357476654001905628}
   rotationAngle: 45
-  duration: 0.3
+  duration: 0.6
   easing: 24
   isLocked: 0
   randomRotationAtStart: 1
@@ -229,8 +229,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   background: {fileID: 2901413546022480431}
   pathImage: {fileID: 0}
-  interactionColorAnimationDuration: 0.2
-  bgInteractionColor: {r: 1, g: 1, b: 1, a: 0.36862746}
+  interactionColorAnimationDuration: 0.4
+  bgInteractionColor: {r: 1, g: 1, b: 1, a: 0.18431373}
   interactionScaleAnimationDuration: 1
   scaleEasing: 18
   doneAnimationDuration: 0.8

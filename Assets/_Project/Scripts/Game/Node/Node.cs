@@ -19,7 +19,7 @@ public class Node : MonoBehaviour
     [SerializeField] PathSegment pathSegment = PathSegment.Pathway;
 
     bool isBusy;
-    bool isDone;
+    float toRotation;
 
     public int PathId => pathId;
     public PathSegment PathSegment => pathSegment;
@@ -32,11 +32,13 @@ public class Node : MonoBehaviour
 
     public void Initialize()
     {
+        toRotation = rotationPivot.transform.rotation.eulerAngles.z;
+
         if (randomRotationAtStart)
         {
             int randomAngleIndex = UnityEngine.Random.Range(0, possibleStartRotationList.Count);
-            float randomAngle = possibleStartRotationList[randomAngleIndex];
-            rotationPivot.transform.Rotate(Vector3.forward, randomAngle);
+            toRotation = possibleStartRotationList[randomAngleIndex];
+            rotationPivot.transform.rotation = Quaternion.Euler(Vector3.forward * toRotation);
         }
 
         nodeConnection.Initialize(this);
@@ -46,32 +48,42 @@ public class Node : MonoBehaviour
     public void InteractWithNode()
     {
         OnNodeInteraction?.Invoke();
-        float newAngle = rotationPivot.transform.rotation.eulerAngles.z + rotationAngle;
-        RotateNode(newAngle);
+        RotateNode();
     }
 
-    public void RotateNode(float newAngle)
+    public void RotateNode()
     {
-        if (isBusy)
+        if (isLocked)
         {
             return;
         }
 
-        isBusy = true;
-        OnNodeRotationStart?.Invoke();
-
-        if (!isLocked)
+        if (isBusy)
         {
-            nodeConnection.DisconnectAllPoints();
-            LeanTween.rotateZ(rotationPivot, newAngle, duration)
-                .setEase(easing)
-                .setOnComplete(() =>
-                {
-                    nodeConnection.CheckAllPointsForConnection();
-                    isBusy = false;
-                    OnNodeRotationEnd?.Invoke();
-                });
+            LeanTween.cancel(rotationPivot);
+            rotationPivot.transform.rotation = Quaternion.Euler(Vector3.forward * toRotation);
         }
+
+        isBusy = true;
+        toRotation += rotationAngle;
+        
+        if (toRotation > 360)
+        {
+            toRotation -= 360;
+        }
+
+        nodeConnection.DisconnectAllPoints();
+        OnNodeRotationStart?.Invoke();
+        LeanTween.rotateZ(rotationPivot, toRotation, duration)
+            .setEase(easing)
+            .setOnComplete(OnRotationComplete);
+    }
+
+    private void OnRotationComplete()
+    {
+        nodeConnection.CheckAllPointsForConnection();
+        isBusy = false;
+        OnNodeRotationEnd?.Invoke();
     }
 
     public List<Node> GetConnectedNodes()
@@ -83,13 +95,11 @@ public class Node : MonoBehaviour
 
     public void SetPathDone()
     {
-        isDone = true;
         OnNodePathDone?.Invoke();
     }
 
     public void SetPathUndone()
     {
-        isDone = false;
         OnNodePathUndone?.Invoke();
     }
 

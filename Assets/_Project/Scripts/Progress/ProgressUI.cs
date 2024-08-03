@@ -51,7 +51,7 @@ public class ProgressUI : MonoBehaviour
 
     private void UpdateUI()
     {
-        currentLevelText.text = lastLevel.ToString();
+        currentLevelText.text = $"{lastLevel + 1}";
         float fillAmount = progress.ExperienceRatio - lastExperienceRatioValue;
 
         if (lastExperienceRatioValue > progress.ExperienceRatio)
@@ -67,7 +67,7 @@ public class ProgressUI : MonoBehaviour
 
                 if (newFill >= 1)
                 {
-                    currentLevelText.text = progress.CurrentLevel.ToString();
+                    currentLevelText.text = $"{progress.CurrentLevel + 1}";
                     newFill = newFill - 1;
                 }
 

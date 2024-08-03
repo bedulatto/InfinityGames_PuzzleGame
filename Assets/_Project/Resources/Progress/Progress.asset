@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 14c014702dc4a6d48b4ca5cec7c03962, type: 3}
   m_Name: Progress
   m_EditorClassIdentifier: 
-  LastStage: 2
-  CurrentExperience: 750
-  TotalExperience: 2750
+  LastStageBeat: 0
+  LastStagePlayed: 0
+  CurrentExperience: 250
+  TotalExperience: 2250
   CurrentLevel: 2
