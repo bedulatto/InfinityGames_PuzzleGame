@@ -1,15 +1,11 @@
 ﻿using System;
 using System.Linq;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class NodeConnectionPoint : MonoBehaviour
 {
     [SerializeField] Transform connectorTransform;
-    [SerializeField] Image connectorImage;
     [SerializeField] float connectorRadius = 10;
-    [SerializeField] Color jointDefaultColor = Color.grey;
-    [SerializeField] Color jointConnectedColor = Color.cyan;
 
     public Node FromNode { get; private set; }
     public NodeConnectionPoint ConnectedTo { get; private set; }
@@ -26,8 +22,6 @@ public class NodeConnectionPoint : MonoBehaviour
         {
             StartConnection(connectionPoint);
         }
-
-        connectorImage.color = ConnectedTo == null ? jointDefaultColor : jointConnectedColor;
     }
 
     public NodeConnectionPoint CastConnectionPoint()
@@ -76,14 +70,11 @@ public class NodeConnectionPoint : MonoBehaviour
         }
 
         ConnectedTo = connectionPoint;
-        connectorImage.color = jointConnectedColor;
         OnConnectionStart?.Invoke(ConnectedTo);
     }
 
     public void EndConnection(NodeConnectionPoint connectionPoint)
     {
-        connectorImage.color = jointDefaultColor;
-
         if (connectionPoint == null || connectionPoint != ConnectedTo)
         {
             return;

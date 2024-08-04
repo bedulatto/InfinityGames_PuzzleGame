@@ -233,13 +233,13 @@ MonoBehaviour:
   doneImage: {fileID: 0}
   undoneImage: {fileID: 0}
   interactionColorAnimationDuration: 0.2
-  bgInteractionColor: {r: 1, g: 1, b: 1, a: 0.18431373}
+  bgInteractionColor: {r: 1, g: 1, b: 1, a: 0.101960786}
   interactionScaleAnimationDuration: 1
   scaleEasing: 18
-  doneAnimationDuration: 2
+  doneAnimationDuration: 1
   pathDoneColor: {r: 0.4509804, g: 0.73333335, b: 0.6392157, a: 1}
   pathUndoneColor: {r: 0.7372549, g: 0.6392157, b: 0.49803922, a: 1}
-  bgDoneColor: {r: 0.7058824, g: 0.8901961, b: 0.5019608, a: 1}
+  bgDoneColor: {r: 0.53333336, g: 0.8392157, b: 0.42352942, a: 1}
 --- !u!1 &2357476654976150949
 GameObject:
   m_ObjectHideFlags: 0

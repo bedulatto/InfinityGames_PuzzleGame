@@ -124,6 +124,7 @@ GameObject:
   - component: {fileID: 7837088900735914637}
   - component: {fileID: 7837088900735914634}
   - component: {fileID: 868993075616538338}
+  - component: {fileID: 2464547015472012663}
   m_Layer: 5
   m_Name: ConnectionPoint
   m_TagString: Untagged
@@ -182,10 +183,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   connectorTransform: {fileID: 5029748497628552947}
-  connectorImage: {fileID: 3955761339087539480}
   connectorRadius: 2
-  jointDefaultColor: {r: 0, g: 0, b: 0, a: 0.29803923}
-  jointConnectedColor: {r: 0, g: 0, b: 0, a: 0}
 --- !u!222 &868993075616538338
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -194,3 +192,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7837088900735914639}
   m_CullTransparentMesh: 1
+--- !u!114 &2464547015472012663
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7837088900735914639}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b9c3c51f0a13dfe46a2fe40950202007, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  connectorImage: {fileID: 3955761339087539480}
+  jointDefaultColor: {r: 1, g: 1, b: 1, a: 0}
+  jointConnectedColor: {r: 1, g: 1, b: 1, a: 1}
+  animationDuration: 1.4
