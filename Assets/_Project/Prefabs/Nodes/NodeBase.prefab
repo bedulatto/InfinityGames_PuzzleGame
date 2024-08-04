@@ -411,7 +411,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   node: {fileID: 2357476654532471744}
-  interactionAudioClip: {fileID: 8300000, guid: ea84955d37c494b4b9790bb2d06bafcb, type: 3}
+  interactionAudioClip: {fileID: 8300000, guid: 0230c4ff3f649d34cbe7862f580b5955, type: 3}
 --- !u!82 &3862078073338893014
 AudioSource:
   m_ObjectHideFlags: 0
