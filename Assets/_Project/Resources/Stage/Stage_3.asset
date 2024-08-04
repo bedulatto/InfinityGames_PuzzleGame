@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 92d90a68abd8aa24aae18e40ea119d70, type: 3}
   m_Name: Stage_3
   m_EditorClassIdentifier: 
-  DisplayName: Stage 3
+  DisplayName: Stage #3
   SceneName: Stage_3
   StageScoreValue: 500

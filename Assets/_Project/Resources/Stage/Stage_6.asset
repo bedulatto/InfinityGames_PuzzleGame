@@ -10,8 +10,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 92d90a68abd8aa24aae18e40ea119d70, type: 3}
-  m_Name: Stage_2
+  m_Name: Stage_6
   m_EditorClassIdentifier: 
-  DisplayName: Stage #2
-  SceneName: Stage_2
-  StageScoreValue: 250
+  DisplayName: Stage #6
+  SceneName: Stage_6
+  StageScoreValue: 750

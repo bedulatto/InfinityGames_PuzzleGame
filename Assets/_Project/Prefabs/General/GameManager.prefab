@@ -52,11 +52,13 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 4850bf185671324488d81201e4380c0a, type: 2}
   - {fileID: 11400000, guid: bd070eff5547b5c4bb8b88117a815f96, type: 2}
   - {fileID: 11400000, guid: b9cbd3a8ec50b44498e7ea7f0e8ee495, type: 2}
+  - {fileID: 11400000, guid: 6b48799b58b3fb945b7ebf6df85d911b, type: 2}
   screenTransition: {fileID: 8540057595408692563}
   hubScene: HubScene
-  inTransitionTime: 0.8
-  outTransitionTime: 0.8
-  waitToLoadNextStage: 5
+  endScene: EndScene
+  inTransitionTime: 0.3
+  outTransitionTime: 1
+  resetOnPlay: 1
 --- !u!1 &8540057595408692565
 GameObject:
   m_ObjectHideFlags: 0

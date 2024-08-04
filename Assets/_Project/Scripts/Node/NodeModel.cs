@@ -8,6 +8,8 @@ public class NodeModel : MonoBehaviour
     [SerializeField] Image background;
     [SerializeField] Image pathImage;
     [SerializeField] Image edgeImage;
+    [SerializeField] Image doneImage;
+    [SerializeField] Image undoneImage;
 
     [Header("Interaction")]
     [SerializeField] float interactionColorAnimationDuration = .1f;
@@ -27,7 +29,18 @@ public class NodeModel : MonoBehaviour
     void Start()
     {
         pathImage.color = pathUndoneColor;
-        storedBgColor = background.color;
+        storedBgColor = background.color; 
+
+        if (doneImage != null)
+        {
+            doneImage.gameObject.SetActive(false);
+        }
+
+        if (undoneImage != null)
+        {
+            undoneImage.gameObject.SetActive(true);
+        }
+
         node = GetComponent<Node>();
         node.OnNodeInteraction += Node_OnNodeInteraction;
         node.OnNodePathDone += Node_OnNodePathDone;
@@ -74,6 +87,16 @@ public class NodeModel : MonoBehaviour
         {
             edgeImage.color = pathDoneColor;
         }
+
+        if (doneImage != null)
+        {
+            doneImage.gameObject.SetActive(true);
+        }
+
+        if (undoneImage != null)
+        {
+            undoneImage.gameObject.SetActive(false);
+        }
     }
 
     private void Node_OnNodePathUndone()
@@ -83,6 +106,16 @@ public class NodeModel : MonoBehaviour
         if (edgeImage != null)
         {
             edgeImage.color = pathUndoneColor;
+        }
+
+        if (doneImage != null)
+        {
+            doneImage.gameObject.SetActive(false);
+        }
+
+        if (undoneImage != null)
+        {
+            undoneImage.gameObject.SetActive(true);
         }
     }
 }

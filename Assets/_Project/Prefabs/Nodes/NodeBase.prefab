@@ -59,15 +59,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.3254902, g: 0.39215687, b: 0.5764706, a: 0}
+  m_Color: {r: 1, g: 0.50980395, b: 0.14509805, a: 0}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
-  m_Type: 1
+  m_Sprite: {fileID: 21300000, guid: 5852e1b476234294b9ee07210f4d24fc, type: 3}
+  m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
@@ -230,14 +230,16 @@ MonoBehaviour:
   background: {fileID: 2901413546022480431}
   pathImage: {fileID: 0}
   edgeImage: {fileID: 0}
+  doneImage: {fileID: 0}
+  undoneImage: {fileID: 0}
   interactionColorAnimationDuration: 0.2
   bgInteractionColor: {r: 1, g: 1, b: 1, a: 0.18431373}
   interactionScaleAnimationDuration: 1
   scaleEasing: 18
-  doneAnimationDuration: 0.8
+  doneAnimationDuration: 2
   pathDoneColor: {r: 0.4509804, g: 0.73333335, b: 0.6392157, a: 1}
-  pathUndoneColor: {r: 0.83137256, g: 0.7411765, b: 0.6745098, a: 1}
-  bgDoneColor: {r: 0.9647059, g: 0.9843137, b: 0.47843137, a: 1}
+  pathUndoneColor: {r: 0.7372549, g: 0.6392157, b: 0.49803922, a: 1}
+  bgDoneColor: {r: 0.7058824, g: 0.8901961, b: 0.5019608, a: 1}
 --- !u!1 &2357476654976150949
 GameObject:
   m_ObjectHideFlags: 0
@@ -411,7 +413,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   node: {fileID: 2357476654532471744}
-  interactionAudioClip: {fileID: 8300000, guid: 0230c4ff3f649d34cbe7862f580b5955, type: 3}
+  interactionAudioClip: {fileID: 8300000, guid: e1a84fbfce6b05d4b81ff3f3466b5ca2, type: 3}
 --- !u!82 &3862078073338893014
 AudioSource:
   m_ObjectHideFlags: 0
