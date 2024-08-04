@@ -14,6 +14,7 @@ public class ProgressUI : MonoBehaviour
     [SerializeField] TextMeshProUGUI totalXpText;
     [SerializeField] TextMeshProUGUI currentXpText;
     [SerializeField] AudioSource showAudio;
+    [SerializeField] Animator animator;
 
     [Header("Show And Hide Animation")]
     [SerializeField] LeanTweenType easingType = LeanTweenType.easeInOutBounce;
@@ -64,7 +65,7 @@ public class ProgressUI : MonoBehaviour
         }
 
         LeanTween.value(0, fillAmount, updateUiDuration)
-            .setEaseOutExpo()
+            .setEaseOutCubic()
             .setOnUpdate((float value) =>
             {
                 float newFill = lastExperienceRatioValue + value;
@@ -85,7 +86,7 @@ public class ProgressUI : MonoBehaviour
             });
 
         LeanTween.value(lastCurrentExperienceValue, progress.CurrentExperience, updateUiDuration)
-            .setEaseOutExpo()
+            .setEaseOutCubic()
             .setOnUpdate((float value) =>
             {
                 currentXpText.text = $"{Mathf.RoundToInt(value)} / {ProgressConstants.LevelThreshold}";
@@ -113,14 +114,7 @@ public class ProgressUI : MonoBehaviour
     {
         Handheld.Vibrate();
         showAudio.Play();
-        LeanTween.cancel(canvasGroup.gameObject);
-        canvasGroup.transform.localScale = new Vector3(2, 2, 1);
-        LeanTween.alphaCanvas(canvasGroup, 1, enterDuration);
-        LeanTween.scale(canvasGroup.gameObject, Vector3.one, enterDuration)
-            .setEase(easingType).setOnComplete(() =>
-            {
-                UpdateUIAnimation();
-            });
+        animator.SetTrigger("show");
 
         canvasGroup.blocksRaycasts = true;
         canvasGroup.interactable = true;

@@ -157,7 +157,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0, b: 0, a: 0.72156864}
+  m_Color: {r: 0, g: 0, b: 0, a: 0.08627451}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -1475,6 +1475,7 @@ GameObject:
   - component: {fileID: 8252567103375774364}
   - component: {fileID: 8252567103375774360}
   - component: {fileID: 8252567103375774363}
+  - component: {fileID: 403334510013765640}
   m_Layer: 5
   m_Name: ProgressUI
   m_TagString: Untagged
@@ -1524,10 +1525,9 @@ MonoBehaviour:
   totalXpText: {fileID: 8252567103170052154}
   currentXpText: {fileID: 8252567101852091033}
   showAudio: {fileID: 5893698892671476432}
+  animator: {fileID: 403334510013765640}
   easingType: 21
   enterDuration: 1
-  leaveDuration: 0.2
-  showDuration: 4
   updateUiDuration: 1
 --- !u!225 &8252567103375774363
 CanvasGroup:
@@ -1541,6 +1541,26 @@ CanvasGroup:
   m_Interactable: 0
   m_BlocksRaycasts: 0
   m_IgnoreParentGroups: 0
+--- !u!95 &403334510013765640
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8252567103375774367}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 35b8795018c39b042b3364ac7a7eefe9, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
 --- !u!1 &8811266031784628823
 GameObject:
   m_ObjectHideFlags: 0
@@ -1731,6 +1751,18 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 6728133149135786242, guid: 15c6cf2402d62244d87b3d015a8541f6, type: 3}
   m_PrefabInstance: {fileID: 5511338386193145426}
   m_PrefabAsset: {fileID: 0}
+--- !u!225 &1353924343574735402
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1234853247412375376}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!114 &3325181259819573776
 MonoBehaviour:
   m_ObjectHideFlags: 0

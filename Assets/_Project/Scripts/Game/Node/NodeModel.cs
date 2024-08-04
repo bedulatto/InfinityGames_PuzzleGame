@@ -53,7 +53,7 @@ public class NodeModel : MonoBehaviour
             });
 
         LeanTween.cancel(gameObject);
-        transform.localScale = Vector3.one * 1.1f;
+        transform.localScale = Vector3.one * 1.3f;
         LeanTween.scale(gameObject, Vector3.one, interactionScaleAnimationDuration).setEase(scaleEasing);
     }
 

@@ -4,8 +4,8 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "Progress", menuName = "Puzzle/Progress")]
 public class ProgressSO : ScriptableObject
 {
-    public int LastStageBeat = 0;
-    public int LastStagePlayed = 0;
+    public int LastStageBeat = -1;
+    public int LastStagePlayed = -1;
     public int CurrentExperience = 0;
     public int TotalExperience = 0;
     public int CurrentLevel = 0;
@@ -55,8 +55,8 @@ public class ProgressSO : ScriptableObject
 
     public void ResetProgress()
     {
-        LastStageBeat = 0;
-        LastStagePlayed = 0;
+        LastStageBeat = -1;
+        LastStagePlayed = -1;
         CurrentExperience = 0;
         TotalExperience = 0;
         CurrentLevel = 0;

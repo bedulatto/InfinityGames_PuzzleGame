@@ -39,16 +39,17 @@ public class GameManager : MonoBehaviour
         else if (instance != this)
         {
             Destroy(gameObject);
+            return;
+        }
+
+        if (resetOnPlay && Application.isEditor)
+        {
+            progress.ResetProgress();
         }
     }
 
     private void Start()
     {
-        if (resetOnPlay && Application.isEditor)
-        {
-            progress.ResetProgress();
-        }
-
         NodeManager.OnAllPathCompleted += NodeManager_OnAllPathCompleted;
         NodeManager.OnPathCompleted += NodeManager_OnPathCompleted;
     }
