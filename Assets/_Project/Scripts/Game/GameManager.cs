@@ -18,9 +18,12 @@ public class GameManager : MonoBehaviour
 
     [Header("Scene Transition")]
     [SerializeField] string hubScene = "HubScene";
+    [SerializeField] string endScene = "EndScene";
     [SerializeField] float inTransitionTime = 0.4f;
     [SerializeField] float outTransitionTime = 0.4f;
-    [SerializeField] float waitToLoadNextStage = 3;
+
+    [Header("Debug")]
+    [SerializeField] bool resetOnPlay;
 
     private StageSO currentStage;
 
@@ -41,6 +44,11 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
+        if (resetOnPlay && Application.isEditor)
+        {
+            progress.ResetProgress();
+        }
+
         NodeManager.OnAllPathCompleted += NodeManager_OnAllPathCompleted;
         NodeManager.OnPathCompleted += NodeManager_OnPathCompleted;
     }
@@ -76,7 +84,7 @@ public class GameManager : MonoBehaviour
         screenTransition.LeaveTransition(outTransitionTime);
     }
 
-    public void WaitAndLoadStage(StageSO stageInfo , float waitDuration)
+    public void WaitAndLoadStage(StageSO stageInfo, float waitDuration)
     {
         StartCoroutine(WaitAndLoadStageRoutine(stageInfo, waitDuration));
     }
@@ -87,7 +95,6 @@ public class GameManager : MonoBehaviour
         LoadStage(stageInfo);
     }
 
-    [ContextMenu("Trigger")]
     public void TriggerScore()
     {
         progress.AddExperience(currentStage.StageScoreValue);
@@ -103,8 +110,19 @@ public class GameManager : MonoBehaviour
     {
         int stageIndex = StageList.IndexOf(currentStage);
         progress.RegisterStageBeat(stageIndex);
-        int nextStageIndex = Mathf.Min(progress.LastStagePlayed + 1, StageList.Count - 1);
-        WaitAndLoadStage(StageList[nextStageIndex], waitToLoadNextStage);
+    }
+
+    public void LoadNextStage()
+    {
+        int nextStageIndex = progress.LastStagePlayed + 1;
+
+        if (nextStageIndex >= StageList.Count)
+        {
+            LoadScene(endScene);
+            return;
+        }
+
+        LoadStage(StageList[nextStageIndex]);
     }
 
     private void NodeManager_OnPathCompleted(int pathId)

@@ -9,6 +9,9 @@ EditorBuildSettings:
     path: Assets/_Project/Scenes/HubScene.unity
     guid: 25e03664f3589474cb36ca2e60a6cb34
   - enabled: 1
+    path: Assets/_Project/Scenes/EndScene.unity
+    guid: 096e43e8717bd384a8f0f8320320fdcf
+  - enabled: 1
     path: Assets/_Project/Scenes/Stage_1.unity
     guid: 2cda990e2423bbf4892e6590ba056729
   - enabled: 1

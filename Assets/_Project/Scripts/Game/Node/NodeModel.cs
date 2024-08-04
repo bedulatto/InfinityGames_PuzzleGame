@@ -7,6 +7,7 @@ public class NodeModel : MonoBehaviour
     [Header("Components")]
     [SerializeField] Image background;
     [SerializeField] Image pathImage;
+    [SerializeField] Image edgeImage;
 
     [Header("Interaction")]
     [SerializeField] float interactionColorAnimationDuration = .1f;
@@ -42,6 +43,7 @@ public class NodeModel : MonoBehaviour
 
     private void Node_OnNodeInteraction()
     {
+        Handheld.Vibrate();
         LeanTween.cancel(background.gameObject);
         background.color = bgInteractionColor;
         LeanTween.value(0, 1, interactionColorAnimationDuration)
@@ -67,10 +69,20 @@ public class NodeModel : MonoBehaviour
 
 
         pathImage.color = pathDoneColor;
+
+        if (edgeImage != null)
+        {
+            edgeImage.color = pathDoneColor;
+        }
     }
 
     private void Node_OnNodePathUndone()
     {
         pathImage.color = pathUndoneColor;
+
+        if (edgeImage != null)
+        {
+            edgeImage.color = pathUndoneColor;
+        }
     }
 }

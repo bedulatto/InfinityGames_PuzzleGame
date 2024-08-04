@@ -52,4 +52,13 @@ public class ProgressSO : ScriptableObject
             OnStageBeat?.Invoke();
         }
     }
+
+    public void ResetProgress()
+    {
+        LastStageBeat = 0;
+        LastStagePlayed = 0;
+        CurrentExperience = 0;
+        TotalExperience = 0;
+        CurrentLevel = 0;
+    }
 }

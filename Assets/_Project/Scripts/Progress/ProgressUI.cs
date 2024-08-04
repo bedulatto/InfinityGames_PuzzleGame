@@ -18,22 +18,20 @@ public class ProgressUI : MonoBehaviour
     [Header("Show And Hide Animation")]
     [SerializeField] LeanTweenType easingType = LeanTweenType.easeInOutBounce;
     [SerializeField] float enterDuration = 0.2f;
-    [SerializeField] float leaveDuration = 0.2f;
-    [SerializeField] float showDuration = 1f;
     [SerializeField] float updateUiDuration = 1;
 
     private float lastExperienceRatioValue = 0;
     private int lastTotalExperienceValue = 0;
     private int lastCurrentExperienceValue = 0;
-    private int lastLevel = 0;
 
     private void Start()
     {
         canvasGroup.alpha = 0;
+        canvasGroup.blocksRaycasts = false;
+        canvasGroup.interactable = false;
         lastExperienceRatioValue = progress.ExperienceRatio;
         lastTotalExperienceValue = progress.TotalExperience;
         lastCurrentExperienceValue = progress.CurrentExperience;
-        lastLevel = progress.CurrentLevel;
         UpdateUI();
         progress.OnExperienceIncreased += Progress_OnExperienceIncreased;
     }
@@ -45,13 +43,19 @@ public class ProgressUI : MonoBehaviour
 
     private void Progress_OnExperienceIncreased()
     {
-        UpdateUI();
-        ShowAndHideAnimation();
+        ShowAnimation();
     }
 
     private void UpdateUI()
     {
-        currentLevelText.text = $"{lastLevel + 1}";
+        currentXpText.text = $"{progress.CurrentExperience} / {ProgressConstants.LevelThreshold}";
+        totalXpText.text = $"Total XP {progress.TotalExperience}";
+        currentLevelText.text = $"{progress.CurrentLevel + 1}";
+        progressBarFill.fillAmount = progress.ExperienceRatio;
+    }
+
+    private void UpdateUIAnimation()
+    {
         float fillAmount = progress.ExperienceRatio - lastExperienceRatioValue;
 
         if (lastExperienceRatioValue > progress.ExperienceRatio)
@@ -60,7 +64,7 @@ public class ProgressUI : MonoBehaviour
         }
 
         LeanTween.value(0, fillAmount, updateUiDuration)
-            .setDelay(enterDuration)
+            .setEaseOutExpo()
             .setOnUpdate((float value) =>
             {
                 float newFill = lastExperienceRatioValue + value;
@@ -75,25 +79,25 @@ public class ProgressUI : MonoBehaviour
             })
             .setOnComplete(() =>
             {
+                currentLevelText.text = $"{progress.CurrentLevel + 1}";
                 progressBarFill.fillAmount = progress.ExperienceRatio;
                 lastExperienceRatioValue = progress.ExperienceRatio;
-                lastLevel = progress.CurrentLevel;
             });
 
         LeanTween.value(lastCurrentExperienceValue, progress.CurrentExperience, updateUiDuration)
-          .setDelay(enterDuration)
-          .setOnUpdate((float value) =>
-          {
-              currentXpText.text = $"{Mathf.RoundToInt(value)} / {ProgressConstants.LevelThreshold}";
-          })
-          .setOnComplete(() =>
-          {
-              currentXpText.text = $"{progress.CurrentExperience} / {ProgressConstants.LevelThreshold}";
-              lastCurrentExperienceValue = progress.CurrentExperience;
-          });
+            .setEaseOutExpo()
+            .setOnUpdate((float value) =>
+            {
+                currentXpText.text = $"{Mathf.RoundToInt(value)} / {ProgressConstants.LevelThreshold}";
+            })
+            .setOnComplete(() =>
+            {
+                currentXpText.text = $"{progress.CurrentExperience} / {ProgressConstants.LevelThreshold}";
+                lastCurrentExperienceValue = progress.CurrentExperience;
+            });
 
         LeanTween.value(lastTotalExperienceValue, progress.TotalExperience, updateUiDuration)
-           .setDelay(enterDuration)
+            .setEaseOutExpo()
            .setOnUpdate((float value) =>
            {
                totalXpText.text = $"Total XP {Mathf.RoundToInt(value)}";
@@ -105,18 +109,20 @@ public class ProgressUI : MonoBehaviour
            });
     }
 
-    private void ShowAndHideAnimation()
+    private void ShowAnimation()
     {
+        Handheld.Vibrate();
         showAudio.Play();
         LeanTween.cancel(canvasGroup.gameObject);
-        canvasGroup.transform.localScale = new Vector3(1, 0, 1);
+        canvasGroup.transform.localScale = new Vector3(2, 2, 1);
         LeanTween.alphaCanvas(canvasGroup, 1, enterDuration);
-        LeanTween.scaleY(canvasGroup.gameObject, 1, enterDuration)
-            .setEase(easingType);
-        LeanTween.alphaCanvas(canvasGroup, 0, leaveDuration)
-            .setDelay(showDuration);
-        LeanTween.scaleY(canvasGroup.gameObject, 0, enterDuration)
-            .setEaseInCirc()
-            .setDelay(showDuration);
+        LeanTween.scale(canvasGroup.gameObject, Vector3.one, enterDuration)
+            .setEase(easingType).setOnComplete(() =>
+            {
+                UpdateUIAnimation();
+            });
+
+        canvasGroup.blocksRaycasts = true;
+        canvasGroup.interactable = true;
     }
 }
