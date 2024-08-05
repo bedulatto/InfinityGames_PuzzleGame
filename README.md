@@ -1,4 +1,4 @@
-# Star Connection
+![image](https://github.com/user-attachments/assets/9789c451-fee2-4e03-8685-44e494136c15)
 
 ## Game Overview
 
